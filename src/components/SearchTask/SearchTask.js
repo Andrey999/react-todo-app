@@ -2,6 +2,6 @@ import React from 'react';
 
 export const SearchTask = () => {
   return(
-   <input placeholder="Search task" />
+   <input type="text" className="form-control" placeholder="Search task" />
   )
 }
