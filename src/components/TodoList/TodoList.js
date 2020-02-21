@@ -1,37 +1,21 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import TodoListItem  from '../TodoListItem/TodoListItem';
 
 import './TodoList.css';
 
-class TodoList extends Component {
-
-  onLabelHandler = () => {
-    const el = this.props.todoData;
-    console.log(el.label);
-  }
-
-  render() {
-    const { todoData } = this.props;
+export const TodoList = ({ todoData }) => {
+    const liElements = todoData.map((todo) => {
+      return(
+        <li className="todo-list list-group-item">
+          <TodoListItem key={todo.id} 
+          label={todo.label} />
+        </li>
+      );
+    })
 
     return(
       <ul className="list-group">
-        { todoData.map((todo) => (
-          <li key={todo.id} 
-             className="todo-list list-group-item" 
-             style={{ color: todo.important ? 'tomato' : 'black'}}
-             onClick={ this.onLabelHandler } >
-               { todo.label }  
-            <div>
-              <button className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrashAlt } /></button>
-              <button className="btn btn-outline-success btn-success-icon"><FontAwesomeIcon icon={faExclamation } /></button>
-            </div> 
-               
-          </li>
-        ) )}
+       { liElements }
       </ul>
     )
   }
-}
-
-export default TodoList;

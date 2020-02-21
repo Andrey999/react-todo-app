@@ -1,15 +1,8 @@
 .todo-list.list-group-item {
-  padding: 12px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 10px 25px;
+  cursor: pointer;
 }
 
 .btn-success-icon {
   margin-left: 15px;
-}
-
-.todo-list-bold {
-  font-weight: bold;
-  color: blue;
 }

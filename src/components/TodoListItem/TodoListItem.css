@@ -1,0 +1,14 @@
+.todo-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-list-bold {
+  font-weight: bold;
+  color: blue;
+}
+
+.todo-list-decoration {
+  text-decoration: line-through;
+}

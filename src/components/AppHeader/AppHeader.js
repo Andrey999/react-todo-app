@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './AppHeader.css';
 
-class AppHeader  extends Component {
+class AppHeader extends Component {
   render() {
     const { todo, done } = this.props;
     return(

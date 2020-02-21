@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from './components/AppHeader/AppHeader';
-import TodoList  from './components/TodoList/TodoList';
+import {TodoList}  from './components/TodoList/TodoList';
 import { SearchTask } from './components/SearchTask/SearchTask';
 import { TodoListStatus } from './components/TodoListStatus/TodoListStatus';
 
@@ -9,8 +9,8 @@ import './App.css';
 
 const App = () => {
   const todoData = [
-    { id: 1, label: 'Drink coffee', important: true },
-    { id: 2, label: 'Learn React', important: false },
+    { id: 1, label: 'Drink coffee', important: false },
+    { id: 2, label: 'Learn React', important: true },
     { id: 3, label: 'Run to work', important: false }
   ];
 
