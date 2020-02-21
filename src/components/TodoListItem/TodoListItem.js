@@ -11,36 +11,34 @@ class TodoListItem extends Component {
   }
 
   onLabelClick = () => {
-    this.setState({
-      important: true
-    })      
+    this.setState((state) => {
+      return {
+        done: !state.done
+      }
+    })    
   }
 
-  todoDone = () => {
-    this.setState({
-      done: true
-    })      
+  onMarkImportant = () => {
+    this.setState((state) => {
+      return {
+        important: !state.important
+      }
+    })
   }
 
   render() {
-    const { label } = this.props;
+    const { label, deleteTask } = this.props;
     const { done, important } = this.state;
-    const onLabel = {
-      fontWeight: important ? 'bold' : 'normal',
-      color: important ? 'blue' : 'black'
-    }
-    const onButton = {
-      textDecoration: done ? 'line-through' : 'none'
-    }
+    let lableItem = done ? 'todo-list-item todo-list-decoration' : 'todo-list-item';
+    let marktItem = important ? 'todo-list-bold' : '';
 
     return(   
-      <span className="todo-list-item">
-        <span style={onLabel, onButton} 
-              onClick={ this.onLabelClick }>{label}</span>
+      <span className={lableItem}>
+        <span className={marktItem} onClick={ this.onLabelClick }>{label}</span>
 
         <span>
-        <button className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrashAlt } /></button>
-        <button className="btn btn-outline-success btn-success-icon" onClick={ this.todoDone }><FontAwesomeIcon icon={faExclamation } /></button>
+          <button className="btn btn-outline-danger" onClick={deleteTask}><FontAwesomeIcon icon={faTrashAlt } /></button>
+          <button className="btn btn-outline-success btn-success-icon" onClick={ this.onMarkImportant }><FontAwesomeIcon icon={faExclamation } /></button>
         </span>
         
       </span>
