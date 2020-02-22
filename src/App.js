@@ -9,13 +9,13 @@ import './App.css';
 
 
 class App extends Component {
-
   state = { 
     todoData: [
-    { id: 1, label: 'Drink coffee' },
-    { id: 2, label: 'Learn React' },
-    { id: 3, label: 'Run to work' }
-  ]
+    { id: 1, label: 'Drink coffee', done: false, important: false },
+    { id: 2, label: 'Learn React', done: false, important: false },
+    { id: 3, label: 'Run to work', done: false, important: false } ],
+    done: false,
+    important: false
 }
 
   deleteTask = (id) => {
@@ -33,7 +33,9 @@ class App extends Component {
   addTask = (text) => {
     const arr = {
       label: text, 
-      id: +new Date()
+      id: +new Date(),
+      done: false,
+      important: false
     }
     this.setState(({ todoData }) => {
       const newTodoData = [ ...todoData, arr ];
@@ -44,23 +46,43 @@ class App extends Component {
     })
   }
 
+  onToggleDone = (id) => {
+    console.log('Done', id);
+  }
+
+  onToggleImportant = (id) => {
+    console.log('Important', id);
+  }
+
   render() {
-    const { todoData } = this.state;
+    const { todoData, done, important } = this.state;
     const list = todoData.length ? TodoList : 'Задач нет';
     return(
       <div className="app-container container">
-          <AppHeader todo={1} done={3} />
+
+          <AppHeader 
+            todo={1}
+            done={3}
+          />
+
         <div className="d-flex search-wrapper">
           <SearchTask />
           <TodoListStatus />
         </div>
+
         { list }
+
         <TodoList 
            todoData={todoData}
-           deleteTask={ this.deleteTask } />
+           deleteTask={ this.deleteTask }
+           onToggleDone={this.onToggleDone}
+           onToggleImportant={this.onToggleImportant} 
+           />
+
            <AddTask 
              addTask={this.addTask}
            />
+
       </div>
     )
   }
