@@ -19,8 +19,12 @@ class App extends Component {
 
   deleteTask = (id) => {
     this.setState((state) => {
+      const idx = state.todoData.findIndex((el) => el.id === id);  // записываем в переменную id массива, равный id клика
+      const newIdx = [ ...state.todoData.slice(0, idx), ...state.todoData.slice(idx + 1) ]; // в первом параметре копируем элементы с 0 по кликнутый элемент
+                                                                                            // второй параметр копирует предыдущий массив с места удаленного id + 1 элемент
       return {
-        todoData: state.todoData.filter(item => item.id != id)
+        todoData: newIdx
+        // todoData: state.todoData.filter(item => item.id != id)
       }
     })
   }
