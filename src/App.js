@@ -3,6 +3,7 @@ import AppHeader from './components/AppHeader/AppHeader';
 import {TodoList}  from './components/TodoList/TodoList';
 import { SearchTask } from './components/SearchTask/SearchTask';
 import { TodoListStatus } from './components/TodoListStatus/TodoListStatus';
+import AddTask from './components/AddTask/AddTask';
 
 import './App.css';
 
@@ -29,6 +30,20 @@ class App extends Component {
     })
   }
 
+  addTask = (text) => {
+    const arr = {
+      label: text, 
+      id: +new Date()
+    }
+    this.setState(({ todoData }) => {
+      const newTodoData = [ ...todoData, arr ];
+
+      return {
+        todoData: newTodoData
+      }
+    })
+  }
+
   render() {
     const { todoData } = this.state;
     const list = todoData.length ? TodoList : 'Задач нет';
@@ -43,6 +58,9 @@ class App extends Component {
         <TodoList 
            todoData={todoData}
            deleteTask={ this.deleteTask } />
+           <AddTask 
+             addTask={this.addTask}
+           />
       </div>
     )
   }
