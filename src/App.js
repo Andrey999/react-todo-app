@@ -7,19 +7,26 @@ import AddTask from './components/AddTask/AddTask';
 
 import './App.css';
 
-
 class App extends Component {
+  maxId = 100;
   state = { 
     todoData: [
-    { id: 1, label: 'Drink coffee', done: false, important: false },
-    { id: 2, label: 'Learn React', done: false, important: false },
-    { id: 3, label: 'Run to work', done: false, important: false } ],
+      this.createTodoItem('Drink coffee'),
+      this.createTodoItem('Learn React'),
+      this.createTodoItem('Run to work'), ]
+}
+
+createTodoItem(text) {
+  return {
+    label: text,
+    id: ++this.maxId,
     done: false,
     important: false
+  }
 }
 
   deleteTask = (id) => {
-    this.setState((state) => {
+    this.setState(({state}) => {
       const idx = state.todoData.findIndex((el) => el.id === id);  // записываем в переменную id массива, равный id клика
       const newIdx = [ ...state.todoData.slice(0, idx), ...state.todoData.slice(idx + 1) ]; // в первом параметре копируем элементы с 0 по кликнутый элемент
                                                                                             // второй параметр копирует предыдущий массив с места удаленного id + 1 элемент
@@ -31,12 +38,7 @@ class App extends Component {
   }
 
   addTask = (text) => {
-    const arr = {
-      label: text, 
-      id: +new Date(),
-      done: false,
-      important: false
-    }
+    const arr = this.createTodoItem(text);
     this.setState(({ todoData }) => {
       const newTodoData = [ ...todoData, arr ];
 
@@ -48,29 +50,41 @@ class App extends Component {
 
   onToggleDone = (id) => {
     this.setState((state) => {
+      const idx = state.todoData.findIndex((el) => el.id === id);  // записываем в переменную id массива, равный id клика
+      const oldItem = state.todoData[idx];
+      const newTodoData = {...oldItem, done: !oldItem.done };
+      const newItem = [ ...state.todoData.slice(0, idx), newTodoData, ...state.todoData.slice(idx + 1) ];
+    
       return {
-        done: !state.done
+        todoData: newItem
       }
     })
   }
 
   onToggleImportant = (id) => {
     this.setState((state) => {
+      const idx = state.todoData.findIndex((el) => el.id === id);  // записываем в переменную id массива, равный id клика
+      const oldItem = state.todoData[idx];
+      const newTodoData = {...oldItem, important: !oldItem.important };
+      const newItem = [ ...state.todoData.slice(0, idx), newTodoData, ...state.todoData.slice(idx + 1) ];
+    
       return {
-        important: !state.important
+        todoData: newItem
       }
     })
   }
 
   render() {
-    const { todoData, done, important } = this.state;
+    const { todoData } = this.state;
+    const doneCount = todoData.filter(el => el.done).length;
+    const todoCount = todoData.length - doneCount;
     const list = todoData.length ? TodoList : 'Задач нет';
     return(
       <div className="app-container container">
 
           <AppHeader 
-            todo={1}
-            done={3}
+            todo={todoCount}
+            done={doneCount}
           />
 
         <div className="d-flex search-wrapper">
