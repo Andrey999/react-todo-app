@@ -8,15 +8,24 @@ class AddTask extends Component {
     value: ''
   }
 
+  onLabelChange = (event) => {
+    this.setState({
+      value: event.target.value
+    })
+  }
+
+  onLabelSubmit = (event) => {
+    event.preventDefault();
+    this.props.addTask(this.state.value);
+  }
+
   render() {
     const { value } = this.state;
-    const { addTask } = this.props;
-    
     return(
-      <div className="todo-add-task">
-        <input type="text" className="form-control" placeholder="Search task" value={value} />
-        <button className="btn btn-primary" onClick={() => addTask('Hello')}>Add Task</button>
-      </div>
+      <form className="todo-add-task" onSubmit={this.onLabelSubmit} >
+        <input type="text" className="form-control" placeholder="Search task" value={value} onChange={this.onLabelChange} />
+        <button className="btn btn-primary">Add Task</button>
+      </form>
    )
   }
 }
