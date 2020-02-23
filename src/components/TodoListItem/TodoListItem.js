@@ -4,11 +4,7 @@ import { faTrashAlt, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import './TodoListItem.css';
 
-class TodoListItem extends Component {
-
-  render() {
-    const { label, deleteTask, onToggleDone, onToggleImportant, done, important } = this.props;
-
+export const TodoListItem = ({ label, deleteTask, onToggleDone, onToggleImportant, done, important }) => {
     let lableItem = done ? 'todo-list-item todo-list-decoration' : 'todo-list-item';
     let marktItem = important ? 'todo-list-bold' : '';
 
@@ -22,8 +18,5 @@ class TodoListItem extends Component {
         </span>
         
       </span>
-     
     )
-  }
 }
-export default TodoListItem;

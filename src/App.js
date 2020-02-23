@@ -47,11 +47,19 @@ class App extends Component {
   }
 
   onToggleDone = (id) => {
-    console.log('Done', id);
+    this.setState((state) => {
+      return {
+        done: !state.done
+      }
+    })
   }
 
   onToggleImportant = (id) => {
-    console.log('Important', id);
+    this.setState((state) => {
+      return {
+        important: !state.important
+      }
+    })
   }
 
   render() {
