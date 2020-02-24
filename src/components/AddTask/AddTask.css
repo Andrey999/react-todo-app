@@ -1,3 +1,9 @@
 .todo-add-task{
   display: flex;
+  margin-top: 15px;
+  justify-content: space-between;
+}
+
+.todo-add-task-input {
+  max-width: 75%;
 }

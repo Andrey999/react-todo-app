@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppHeader from './components/AppHeader/AppHeader';
 import {TodoList}  from './components/TodoList/TodoList';
-import { SearchTask } from './components/SearchTask/SearchTask';
+import SearchTask from './components/SearchTask/SearchTask';
 import { TodoListStatus } from './components/TodoListStatus/TodoListStatus';
 import AddTask from './components/AddTask/AddTask';
 
@@ -13,7 +13,8 @@ class App extends Component {
     todoData: [
       this.createTodoItem('Drink coffee'),
       this.createTodoItem('Learn React'),
-      this.createTodoItem('Run to work'), ]
+      this.createTodoItem('Run to work'), ],
+      term: ''
 }
 
 createTodoItem(text) {
@@ -74,11 +75,23 @@ createTodoItem(text) {
     })
   }
 
+  onSearchChange = (term) => {
+    this.setState({ term });
+  }
+
+  searchTask(arr, term) {
+    if(term.length === 0) return arr;
+    
+    return arr.filter(item => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1);
+  }
+
   render() {
-    const { todoData } = this.state;
+    const { todoData, term } = this.state;
+    const visibleItems = this.searchTask(todoData, term);
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
     const list = todoData.length ? TodoList : 'Задач нет';
+
     return(
       <div className="app-container container">
 
@@ -87,15 +100,15 @@ createTodoItem(text) {
             done={doneCount}
           />
 
-        <div className="d-flex search-wrapper">
-          <SearchTask />
+        <div className="d-flex justify-content-between search-wrapper">
+          <SearchTask onSearchChange={this.onSearchChange} />
           <TodoListStatus />
         </div>
 
         { list }
 
         <TodoList 
-           todoData={todoData}
+           todoData={visibleItems}
            deleteTask={ this.deleteTask }
            onToggleDone={this.onToggleDone}
            onToggleImportant={this.onToggleImportant} 
