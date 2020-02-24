@@ -17,6 +17,9 @@ class AddTask extends Component {
   onLabelSubmit = (event) => {
     event.preventDefault();
     this.props.addTask(this.state.value);
+    this.setState({
+      value: ''
+    })
   }
 
   render() {
