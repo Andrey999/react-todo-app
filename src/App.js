@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppHeader from './components/AppHeader/AppHeader';
 import {TodoList}  from './components/TodoList/TodoList';
 import SearchTask from './components/SearchTask/SearchTask';
-import { TodoListStatus } from './components/TodoListStatus/TodoListStatus';
+import TodoListStatus from './components/TodoListStatus/TodoListStatus';
 import AddTask from './components/AddTask/AddTask';
 
 import './App.css';
@@ -14,7 +14,8 @@ class App extends Component {
       this.createTodoItem('Drink coffee'),
       this.createTodoItem('Learn React'),
       this.createTodoItem('Run to work'), ],
-      term: ''
+      term: '',
+      value: 'all'
 }
 
 createTodoItem(text) {
@@ -27,7 +28,7 @@ createTodoItem(text) {
 }
 
   deleteTask = (id) => {
-    this.setState(({state}) => {
+    this.setState((state) => {
       const idx = state.todoData.findIndex((el) => el.id === id);  // записываем в переменную id массива, равный id клика
       const newIdx = [ ...state.todoData.slice(0, idx), ...state.todoData.slice(idx + 1) ]; // в первом параметре копируем элементы с 0 по кликнутый элемент
                                                                                             // второй параметр копирует предыдущий массив с места удаленного id + 1 элемент
@@ -82,12 +83,26 @@ createTodoItem(text) {
   searchTask(arr, term) {
     if(term.length === 0) return arr;
     
-    return arr.filter(item => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1);
+    return arr.filter(item => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1); 
+  }
+
+  filterButton(arr, value) {
+    switch(value) {
+      case 'all': return arr;
+      case 'active': return arr.filter(item => !item.done);
+      case 'done': return arr.filter(item => item.done);
+      default: return arr;
+    }
+  }
+
+  filterActiveButton = (value) => {
+    this.setState({ value })
   }
 
   render() {
-    const { todoData, term } = this.state;
-    const visibleItems = this.searchTask(todoData, term);
+    const { todoData, term, value } = this.state;
+    const visibleItems = this.filterButton(
+                         this.searchTask(todoData, term), value);
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
     const list = todoData.length ? TodoList : 'Задач нет';
@@ -102,7 +117,10 @@ createTodoItem(text) {
 
         <div className="d-flex justify-content-between search-wrapper">
           <SearchTask onSearchChange={this.onSearchChange} />
-          <TodoListStatus />
+          <TodoListStatus 
+          value={value}
+          filterActiveButton={this.filterActiveButton}
+          />
         </div>
 
         { list }
