@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import './AddTask.css';
 
 class AddTask extends Component {
-
   state = {
     value: ''
   }
@@ -16,6 +14,7 @@ class AddTask extends Component {
 
   onLabelSubmit = (event) => {
     event.preventDefault();
+    if(!this.state.value) return false;
     this.props.addTask(this.state.value);
     this.setState({
       value: ''
@@ -32,5 +31,4 @@ class AddTask extends Component {
    )
   }
 }
-
-  export default AddTask;
+export default AddTask;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faExclamation } from '@fortawesome/free-solid-svg-icons';
-
 import './TodoListItem.css';
 
 export const TodoListItem = ({ label, deleteTask, onToggleDone, onToggleImportant, done, important }) => {

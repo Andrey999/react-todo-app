@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './AppHeader.css';
 
-class AppHeader extends Component {
-  render() {
-    const { todo, done } = this.props;
+export const AppHeader = ({ todo, done }) => {
     return(
       <div className="d-flex justify-content-between align-items-baseline">
         <h1 className="text-center todo-title">Todo List</h1>
@@ -13,7 +11,4 @@ class AppHeader extends Component {
         </div>
       </div>
     )
-  }
 }
-
-export default AppHeader;

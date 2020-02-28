@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import AppHeader from './components/AppHeader/AppHeader';
+import {AppHeader} from './components/AppHeader/AppHeader';
 import {TodoList}  from './components/TodoList/TodoList';
 import SearchTask from './components/SearchTask/SearchTask';
-import TodoListStatus from './components/TodoListStatus/TodoListStatus';
+import {TodoListStatus} from './components/TodoListStatus/TodoListStatus';
 import AddTask from './components/AddTask/AddTask';
 
 import './App.css';
@@ -105,11 +105,9 @@ createTodoItem(text) {
                          this.searchTask(todoData, term), value);
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
-    const list = todoData.length ? TodoList : 'Задач нет';
 
     return(
       <div className="app-container container">
-
           <AppHeader 
             todo={todoCount}
             done={doneCount}
@@ -118,27 +116,24 @@ createTodoItem(text) {
         <div className="d-flex justify-content-between search-wrapper">
           <SearchTask onSearchChange={this.onSearchChange} />
           <TodoListStatus 
-          value={value}
-          filterActiveButton={this.filterActiveButton}
+            value={value}
+            filterActiveButton={this.filterActiveButton}
           />
         </div>
-
-        { list }
 
         <TodoList 
            todoData={visibleItems}
            deleteTask={ this.deleteTask }
            onToggleDone={this.onToggleDone}
            onToggleImportant={this.onToggleImportant} 
-           />
+        />
 
-           <AddTask 
-             addTask={this.addTask}
-           />
+        <AddTask 
+           addTask={this.addTask}
+        />
 
       </div>
     )
   }
 }
-
 export default App;
